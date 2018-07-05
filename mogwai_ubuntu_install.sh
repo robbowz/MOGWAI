@@ -59,6 +59,7 @@ function remove_old_files() {
 	sudo rm -rf /root/.mogwaicore
    	sudo rm -rf mogwaid
    	sudo rm -rf mogwai-cli
+	sudo rm -rf mogwaicore-0.12.2
 	echo "Done..."
 }
 
