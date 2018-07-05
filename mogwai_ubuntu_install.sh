@@ -1,6 +1,6 @@
 # mogwai masternode install script
 # Edited by Robbowz
-VERSION="0.1"
+VERSION="0.2"
 NODEPORT='17777'
 RPCPORT='17710'
 
@@ -82,6 +82,9 @@ function download_wallet() {
 	mkdir /root/.mogwaicore
 	wget https://github.com/mogwaicoin/mogwai/releases/download/untagged-f2812049204fdc70402c/mogwaicore-0.12.2-linux64.tar.gz
     	tar -xvf mogwaicore-0.12.2-linux64.tar.gz
+	cp mogwaicore-0.12.2/bin/mogwaid /root/mogwai/mogwaid
+	cp mogwaicore-0.12.2/bin/mogwai-cli /root/mogwai/mogwai-cli
+	rm -rf mogwaicore-0.12.2/bin/
 	echo "Done..."
 }
 
