@@ -55,8 +55,8 @@ function remove_old_files() {
 	echo "Removing old files..."
 	sudo killall mogwaid
 	sudo rm -rf /root/mogwai
+	sudo rm -rf /root/.mogwai
 	sudo rm -rf /root/.mogwaicore
-	sudo rm -rf /root/.mogwaicorecore
    	sudo rm -rf mogwaid
    	sudo rm -rf mogwai-cli
 	echo "Done..."
@@ -66,20 +66,20 @@ function remove_old_files() {
 function install_sentinel() {
   echo -e "Install sentinel."
   apt-get -y install python-virtualenv virtualenv >/dev/null 2>&1
-  git clone https://github.com/mogwaicoin/mogwai-sentinel.git .mogwaicorecore/sentinel >/dev/null 2>&1
-  cd .mogwaicorecore/sentinel
+  git clone https://github.com/mogwaicoin/mogwai-sentinel.git .mogwaicore/sentinel >/dev/null 2>&1
+  cd .mogwaicore/sentinel
   virtualenv ./venv >/dev/null 2>&1
   ./venv/bin/pip install -r requirements.txt >/dev/null 2>&1
-  echo  "* * * * * cd .mogwaicorecore/sentinel && ./venv/bin/python bin/sentinel.py >> .mogwaicorecore/sentinel.log 2>&1" > /root/.mogwaicorecore/mogwai.cron
-  crontab /root/.mogwaicorecore/mogwai.cron
-  rm /root/.mogwaicorecore/mogwai.cron >/dev/null 2>&1
+  echo  "* * * * * cd .mogwaicore/sentinel && ./venv/bin/python bin/sentinel.py >> .mogwaicore/sentinel.log 2>&1" > /root/.mogwaicore/mogwai.cron
+  crontab /root/.mogwaicore/mogwai.cron
+  rm /root/.mogwaicore/mogwai.cron >/dev/null 2>&1
 }
 
 function download_wallet() {
 	echo "Downloading wallet..."
 	mkdir /root/mogwai
     	cd mogwai
-	mkdir /root/.mogwaicorecore
+	mkdir /root/.mogwaicore
 	wget https://github.com/mogwaicoin/mogwai/releases/download/untagged-f2812049204fdc70402c/mogwaicore-0.12.2-linux64.tar.gz
     	tar -xvf mogwaicore-0.12.2-linux64.tar.gz
 	echo "Done..."
@@ -212,6 +212,7 @@ if [ "$firewall" -eq 1 ]; then
 fi
 
 remove_old_files
+install_sentinel
 download_wallet
 configure_masternode
 
